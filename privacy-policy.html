@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d2b">
+  <meta name="description" content="KiberUstoz Telegram botida shaxsiy ma’lumotlar qanday ishlatilishi va saqlanishi haqida maxfiylik siyosati.">
+  <title>Maxfiylik siyosati | KiberUstoz</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17312e;
+      --muted: #55706a;
+      --paper: #f5f7f2;
+      --surface: #fffefa;
+      --line: #dce5db;
+      --green: #c7e66a;
+      --green-dark: #315d46;
+      --blue: #d9edeb;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(199, 230, 106, .20), transparent 34rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    a { color: #1d6552; text-underline-offset: 3px; }
+    a:hover { color: #103e37; }
+    .topbar {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px max(24px, calc((100vw - 1120px) / 2));
+      border-bottom: 1px solid rgba(220, 229, 219, .9);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--green);
+      color: #183c32;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .topbar-note { color: var(--muted); font-size: 13px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: #102d2b;
+      color: #f7f8ef;
+    }
+    .hero::after {
+      position: absolute;
+      right: max(5vw, calc((100vw - 1120px) / 2));
+      bottom: -120px;
+      width: 300px;
+      height: 300px;
+      border: 1px solid rgba(199, 230, 106, .35);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(199, 230, 106, .035), 0 0 0 58px rgba(199, 230, 106, .025);
+      content: "";
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 76px 0 84px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 22px; height: 1px; background: currentColor; content: ""; }
+    h1 {
+      max-width: 760px;
+      margin: 22px 0 18px;
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 72px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+    .hero p { max-width: 620px; margin: 0; color: #c7d6ce; font-size: 18px; }
+    .updated { display: block; margin-top: 26px; color: #a8beb4; font-size: 13px; }
+    .layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: clamp(32px, 6vw, 84px);
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 54px 0 92px;
+    }
+    .contents { position: sticky; top: 24px; align-self: start; }
+    .contents-title {
+      margin: 0 0 14px;
+      color: #789087;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .contents nav { display: grid; gap: 4px; }
+    .contents a {
+      padding: 7px 10px;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      text-decoration: none;
+    }
+    .contents a:hover { border-color: var(--green-dark); color: var(--ink); }
+    main { min-width: 0; }
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      margin: 0 0 42px;
+      padding: 24px 26px;
+      border: 1px solid #d4e3d7;
+      border-radius: 8px;
+      background: linear-gradient(110deg, #e8f2de, #e9f3ef);
+    }
+    .summary p { margin: 0; color: #34544a; }
+    .summary strong { color: #183c32; }
+    .summary-tag {
+      padding: 7px 10px;
+      border: 1px solid #c8ddbe;
+      border-radius: 5px;
+      color: #315d46;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    section { padding: 0 0 32px; margin: 0 0 32px; border-bottom: 1px solid var(--line); scroll-margin-top: 24px; }
+    section:last-of-type { border-bottom: 0; }
+    h2 {
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    h3 { margin: 22px 0 7px; font-size: 16px; }
+    p { margin: 0 0 12px; color: #425e57; }
+    ul { margin: 10px 0 0; padding-left: 20px; color: #425e57; }
+    li { padding-left: 4px; margin: 7px 0; }
+    .data-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+    .data-item { padding: 16px 17px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+    .data-item b { display: block; margin-bottom: 4px; color: #21483c; font-size: 14px; }
+    .data-item span { display: block; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .notice {
+      margin: 18px 0 0;
+      padding: 15px 17px;
+      border-left: 3px solid #82aa70;
+      background: #edf3e9;
+      color: #405c4d;
+      font-size: 14px;
+    }
+    .contact {
+      padding: 23px 25px;
+      border-radius: 8px;
+      background: #dcecea;
+    }
+    .contact p:last-child { margin-bottom: 0; }
+    .contact-placeholder { color: #7c492c; font-weight: 700; }
+    footer {
+      padding: 22px 24px;
+      border-top: 1px solid var(--line);
+      color: #6c8179;
+      font-size: 12px;
+      text-align: center;
+    }
+    @media (max-width: 760px) {
+      .topbar { padding-inline: 20px; }
+      .topbar-note { max-width: 130px; text-align: right; }
+      .hero-inner { width: min(100% - 40px, 600px); padding: 58px 0 64px; }
+      .hero p { font-size: 16px; }
+      .layout { display: block; width: min(100% - 40px, 600px); padding-top: 30px; }
+      .contents { position: static; margin-bottom: 30px; }
+      .contents nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .contents a { padding: 7px 8px; }
+      .summary { grid-template-columns: 1fr; gap: 12px; padding: 19px; }
+      .summary-tag { justify-self: start; }
+      h2 { font-size: 27px; }
+      .data-list { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="KiberUstoz maxfiylik siyosati boshiga">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span>KiberUstoz</span>
+    </a>
+    <span class="topbar-note">Maxfiylik va ma’lumotlar</span>
+  </header>
+
+  <div class="hero" id="top">
+    <div class="hero-inner">
+      <span class="eyebrow">Ochiq va tushunarli</span>
+      <h1>Maxfiylik siyosati</h1>
+      <p>KiberUstoz Telegram botidan foydalanganda qanday ma’lumotlar ishlatilishi, nima maqsadda qayta ishlanishi va ularni o‘chirishni qanday so‘rash mumkinligi haqida.</p>
+      <span class="updated">Yangilangan sana: 9-oktabr 2026</span>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="contents" aria-label="Sahifa bo‘limlari">
+      <p class="contents-title">Sahifada</p>
+      <nav>
+        <a href="#operator">Mas’ul tomon</a>
+        <a href="#data">Qaysi ma’lumotlar</a>
+        <a href="#purpose">Foydalanish maqsadi</a>
+        <a href="#sharing">Uchinchi tomonlar</a>
+        <a href="#security">Parollar va xavfsizlik</a>
+        <a href="#retention">Saqlash va o‘chirish</a>
+        <a href="#contact">Aloqa</a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="summary">
+        <p><strong>Qisqacha:</strong> bot Telegram profilingizning ayrim ma’lumotlari va test natijalarini SQLite bazasida saqlaydi. Tekshirish uchun yuborgan IP, domen yoki username qiymatlari esa ishlatilayotgan tekshiruv xizmatlariga uzatilishi mumkin.</p>
+        <span class="summary-tag">Faqat zarur ma’lumotlar</span>
+      </div>
+
+      <section id="operator">
+        <h2>1. Mas’ul tomon</h2>
+        <p>Ushbu siyosat KiberUstoz Telegram botiga taalluqli. Bot operatori yoki ma’lumotlar bo‘yicha mas’ul shaxsning nomi va yuridik maqomi loyiha kodida belgilanmagan.</p>
+      </section>
+
+      <section id="data">
+        <h2>2. Qaysi ma’lumotlar ishlatiladi?</h2>
+        <p>Botning amaldagi kodida quyidagi ma’lumotlar foydalanuvchi yozuviga kiritiladi:</p>
+        <div class="data-list">
+          <div class="data-item">
+            <b>Telegram identifikatori</b>
+            <span>Telegram user ID foydalanuvchi yozuvini topish va natijani unga bog‘lash uchun ishlatiladi.</span>
+          </div>
+          <div class="data-item">
+            <b>Profil ma’lumotlari</b>
+            <span>Username, ism va familiya Telegram taqdim etsa saqlanadi; ayrim qiymatlar bo‘sh bo‘lishi mumkin.</span>
+          </div>
+          <div class="data-item">
+            <b>Faollik vaqtlari</b>
+            <span>Yozuv yaratilgan vaqt va oxirgi ko‘rilgan vaqt saqlanadi.</span>
+          </div>
+          <div class="data-item">
+            <b>Test natijalari</b>
+            <span>Eng yuqori test bali va test urinishlari soni saqlanadi.</span>
+          </div>
+          <div class="data-item">
+            <b>Premium holati</b>
+            <span>Premium faolligi, UTC boshlanish/tugash vaqti va berilish manbasi (admin sinovi yoki to‘lov) saqlanadi.</span>
+          </div>
+          <div class="data-item">
+            <b>Quiz tarixi</b>
+            <span>Savol IDlari, faol test indeksi, ball, tanlangan variant indeksi, to‘g‘ri/noto‘g‘riligi va javob vaqti saqlanadi.</span>
+          </div>
+          <div class="data-item">
+            <b>Dars progressi va sozlamalar</b>
+            <span>Tugallangan dars IDlari, til sozlamasi va bildirishnoma afzalligi saqlanadi. Avtomatik bildirishnoma yuborish hozir ulanmagan.</span>
+          </div>
+          <div class="data-item">
+            <b>Admin amallari</b>
+            <span>Admin IDsi, maqsad foydalanuvchi IDsi, amal turi va texnik vaqt yoziladi; parol yoki token yozilmaydi.</span>
+          </div>
+          <div class="data-item">
+            <b>Tekshiruvga yuborilgan qiymatlar</b>
+            <span>IP, domen va username tekshiruvlari xabar sifatida qayta ishlanadi; ular foydalanuvchi jadvaliga yozilmaydi.</span>
+          </div>
+        </div>
+        <p class="notice">Bot SQLite ma’lumotlar bazasidan foydalanadi. Eski quiz yozuvlari uchun foydalanuvchida faqat mavjud eng yuqori ball va urinishlar soni qolgan bo‘lishi mumkin; yangi urinishlarning javoblari va ballari alohida saqlanadi.</p>
+      </section>
+
+      <section id="purpose">
+        <h2>3. Ma’lumotlardan foydalanish</h2>
+        <p>Ma’lumotlar bot funksiyalarini bajarish uchun ishlatiladi:</p>
+        <ul>
+          <li>foydalanuvchini tanish, profilini va premium holatini ko‘rsatish;</li>
+          <li>test natijasini saqlash va bazadagi natijalar bo‘yicha reyting tuzish;</li>
+          <li>foydalanuvchi quiz javoblari asosida to‘g‘ri javoblar soni va aniqlikni hisoblash, davom etilayotgan testni tiklash;</li>
+          <li>tugallangan darslar va bildirishnoma afzalligini saqlash;</li>
+          <li>administratorga foydalanuvchilar va umumiy statistikani ko‘rish, premium holatini boshqarish imkonini berish;</li>
+          <li>IP, DNS va ochiq username tekshiruvlari bo‘yicha foydalanuvchi so‘roviga javob qaytarish.</li>
+        </ul>
+        <p>Premium uchun haqiqiy to‘lov integratsiyasi joriy kodda mavjud emas.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>4. Tashqi xizmatlarga uzatish</h2>
+        <p>IP tekshiruvida kiritilgan ochiq IPv4 manzil ma’lumot olish uchun ipwho.is xizmatiga, zarur bo‘lsa ipapi.co xizmatiga HTTPS so‘rovida yuboriladi. Xizmat javob bermasa, kod ikkinchi xizmatni sinab ko‘rishi mumkin.</p>
+        <p>DNS tekshiruvida kiritilgan domen bo‘yicha A, AAAA, MX va NS so‘rovlari tizimda sozlangan DNS resolveriga yuboriladi. Domenning o‘zi alohida mahalliy ma’lumotlar bazasiga saqlanmaydi.</p>
+        <p>Username OSINT tekshiruvi kiritilgan username bilan GitHub, X, Instagram va LinkedIn sahifalariga HTTP so‘rov yuboradi. Tashqi xizmatlar so‘rovlar va texnik ulanish ma’lumotlarini o‘z siyosatiga muvofiq qayd qilishi mumkin.</p>
+        <p>Ma’lumotlarning tashqi xizmatlarga borishi foydalanilgan funksiya, ishga tushirilgan kod va server/DNS sozlamalariga bog‘liq. Ushbu xizmatlarning ma’lumotni saqlash amaliyoti bot operatori tomonidan nazorat qilinmaydi.</p>
+      </section>
+
+      <section id="security">
+        <h2>5. Parollar va xavfsizlik</h2>
+        <p>KiberUstoz bot sizdan parol yoki Telegram login/tasdiqlash kodini so‘ramaydi. Bunday ma’lumotlarni botga yoki boshqa shaxslarga yubormang.</p>
+        <p>Bot bazasidagi ma’lumotlarga kirish va server xavfsizligi uni joylashtirgan muhit sozlamalariga ham bog‘liq. Administrator buyruqlari kodda `ADMIN_IDS` ro‘yxati orqali cheklanadi.</p>
+      </section>
+
+      <section id="retention">
+        <h2>6. Saqlash muddati va o‘chirish</h2>
+        <p>Kodda foydalanuvchi, quiz javoblari, dars progressi, sozlamalar yoki admin audit yozuvlarini belgilangan muddatdan so‘ng avtomatik o‘chiradigan mexanizm yo‘q. Shu sabab ular SQLite bazasida operator o‘chirmaguncha saqlanishi mumkin. Premium muddati tugashi huquqni faol bo‘lmagan holatga o‘tkazadi, lekin tarixiy yozuvlarni o‘chirmaydi.</p>
+        <p>Ma’lumotlaringizni ko‘rib chiqish yoki o‘chirishni so‘rash uchun quyidagi aloqa manziliga Telegram user ID’ingizni va so‘rovingizni yuboring. So‘rov operator tomonidan tekshiriladi; hozirgi bot ichida o‘z-o‘ziga xizmat ko‘rsatadigan o‘chirish buyrug‘i mavjud emas.</p>
+        <p class="notice">O‘chirish talabi tasdiqlansa, operator tegishli yozuvni ma’lumotlar bazasidan qo‘lda o‘chirishi mumkin. Zaxira nusxalari yoki hosting provayderidagi nusxalar bo‘lsa, ularning saqlanish muddati loyiha kodida belgilanmagan.</p>
+      </section>
+
+      <section id="contact">
+        <h2>7. Aloqa va savollar</h2>
+        <div class="contact">
+          <p>Maxfiylik, ma’lumotni ko‘rish yoki o‘chirish bo‘yicha murojaat:</p>
+          <p class="contact-placeholder">[Nashr qilishdan oldin mas’ul aloqa emaili yoki Telegram username’ini kiriting]</p>
+          <p>Murojaatda Telegram user ID va so‘rov mazmunini yozing. Parol yoki login kodini yubormang.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>KiberUstoz · Maxfiylik siyosati · Sahifa tashqi shrift, analitika yoki kuzatuv skriptlarini yuklamaydi.</footer>
+</body>
+</html>
